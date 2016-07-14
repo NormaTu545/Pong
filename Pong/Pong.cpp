@@ -21,6 +21,9 @@ int main() {
 	// Limit the framerate to 60 frames per second
 	window.setFramerateLimit(60);
 
+	//RECTANGLE TEST (width, height)
+	sf::RectangleShape paddle(sf::Vector2f(20, 100));
+
 	//Start Game Loop
 	while (window.isOpen()) {  //~~~~~~~~~CODE BODY~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		sf::Event event;
@@ -32,7 +35,8 @@ int main() {
 		//Mandatory so things from previous frames go away at next frames
 		window.clear();
 
-		window.draw(line, 2, sf::Lines);
+		window.draw(line, 2, sf::Lines); //NET IN MIDDLE
+		window.draw(paddle); //Paddle Test
 
 		//Mandatory double-buffering, takes what was drawn & displays to window from hidden buffer
 		window.display();
