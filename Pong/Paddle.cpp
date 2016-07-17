@@ -1,27 +1,52 @@
 #include "stdafx.h"
 #include "Paddle.h"
 
+#define PLAYER_1 1
+#define PLAYER_2 2
+#define WINDOW_WIDTH 1000
+#define WINDOW_HEIGHT 500
+
 //Constructor, returns POINTER to object Paddle
-Paddle::Paddle(int playerNum) {
- 
-	//Make top FloatRect
-	top.top = 0.f;
-	top.left = 0.f;
-	top.width = PADDLE_PART_WIDTH;
-	top.height = PADDLE_PART_HEIGHT;
+Paddle::Paddle(int whichPlayer) {
+	//Paddle position
+	player = whichPlayer;
 
-	middle.top = 5.f;
-	middle.left = 10.f;
-
-
-
+	if (player == PLAYER_1) {
+		//Initialize X position on LEFT side of screen for player 1
+		position.x = 0; 
+	}
+	else { 
+		//Initialize X position to RIGHT side for player 2
+		position.x = WINDOW_WIDTH; 
+	}
+	//Initializes Y position halfway down the screen (for both players)
+	position.y = WINDOW_HEIGHT / 2;
+	
+	paddleShape.setSize(sf::Vector2f(50, 5));
+	paddleShape.setPosition(position);
 }
 
-//Destructor
-Paddle::~Paddle() {
-	//Leaving blank since we don't need to destroy paddle
+FloatRect Paddle::getPosition()
+{
+	return paddleShape.getGlobalBounds();
 }
 
-void Paddle::move(bool up) {
+RectangleShape Paddle::getShape()
+{
+	return paddleShape;
+}
 
+void Paddle::moveUp()
+{
+	position.y -= paddleSpeed;
+}
+
+void Paddle::moveDown()
+{
+	position.y += paddleSpeed;
+}
+
+void Paddle::update()
+{
+	paddleShape.setPosition(position);
 }
