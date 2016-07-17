@@ -22,7 +22,7 @@ Paddle::Paddle(int whichPlayer) {
 	//Initializes Y position halfway down the screen (for both players)
 	position.y = WINDOW_HEIGHT / 2;
 	
-	paddleShape.setSize(sf::Vector2f(50, 5));
+	paddleShape.setSize(sf::Vector2f(20, 100));
 	paddleShape.setPosition(position);
 }
 
