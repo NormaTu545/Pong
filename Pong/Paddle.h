@@ -32,18 +32,5 @@ public:
 	void moveDown(); //subtracts paddleSpeed from y position
 
 	void update();
-	/*
-	// Paddle can only move up or down
-	void move(bool up);
-
-	// Invisible thirds of the paddle object 
-	// for collision detection of ball to parts of the paddle
-	sf::FloatRect top;
-	sf::FloatRect middle;
-	sf::FloatRect bottom;
-
-	// Actual rectangle for the paddle
-	sf::RectangleShape paddle;
-	*/
 };
 

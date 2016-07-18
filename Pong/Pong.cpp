@@ -20,7 +20,7 @@ int main() {
 
 	sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "PONGBALLS");
 	
-	//~~Loading in data~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+	//~~[Loading in data]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 	int score_P1 = 0; //Left of net
 	int score_P2 = 0; //Right of net
 
@@ -34,7 +34,7 @@ int main() {
 	//Create a "Text" object 
 	Text hud; //aka Heads Up Dispay
 
-	//Font is "karmic_arcade" from dafont.com
+	//Font is "karmatic_arcade" from dafont.com
 	Font font;
 	font.loadFromFile("kaFont.ttf");
 
@@ -47,7 +47,7 @@ int main() {
 	//Choose a color 
 	hud.setColor(sf::Color::White);
 
-	//Draws the Pong "net" at the middle of the window
+	//Load the Pong "net" at the middle of the window
 	sf::Vertex line[] = {
 		sf::Vertex(sf::Vector2f(WINDOW_WIDTH/2, 0)), 
 		sf::Vertex(sf::Vector2f(WINDOW_WIDTH/2, WINDOW_HEIGHT))
@@ -56,22 +56,115 @@ int main() {
 	//Limit the framerate to 60 frames per second
 	window.setFramerateLimit(60);
 
-	//Start Game Loop
-	while (window.isOpen()) {  //~~~~~~~~~CODE BODY~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+	//~~~[Start Game Loop]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+	while (window.isOpen()) {
 		sf::Event event;
 		while (window.pollEvent(event)) {
 			if (event.type == sf::Event::Closed)
 				window.close();
+		} //Stops everything if window is closed by user
+
+		//~~[KEY EVENT HANDLING]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+
+		if (Keyboard::isKeyPressed(Keyboard::W)) {
+			//move player 1's paddle up
+			paddle_P1.moveUp;
+	    }
+		else if (Keyboard::isKeyPressed(Keyboard::S)) {
+		    //move player 1's paddle down
+			paddle_P1.moveDown;
 		}
-		//~~Clear/Draw/Display: Completely refreshes everything at each iteration of main~~
-		//Mandatory so things from previous frames go away at next frames
-		window.clear();
+		else if (Keyboard::isKeyPressed(Keyboard::D)) {
+		    //fire a pongball from player 1
+			//[TO BE IMPLEMENTED]
+		}
+		else if (Keyboard::isKeyPressed(Keyboard::Up)) {
+			//move player 2's paddle up
+			paddle_P2.moveUp;
+		}
+		else if (Keyboard::isKeyPressed(Keyboard::Down)) {
+			//move player 2's paddle down
+			paddle_P2.moveDown;
+		}
+		else if (Keyboard::isKeyPressed(Keyboard::Left)) {
+		    //fire a pongball from player 2 
+			//[TO BE IMPLEMENTED]
+		}
 
+		//~~[FOR THE LOVE OF GOD TURN THE ABOVE INTO A SWITCH STATEMENT]~~~~~~~//
+
+		/*
+		*********************************************************************
+		[Event Handling]
+		*********************************************************************
+		*/
+
+		bool player2scored = ball.getPosition().left < 0;
+		bool player1scored = ball.getPosition().left + 40 > WINDOW_WIDTH;
+
+		//~~[Handle ball hitting sides/going past a paddle]~~~~~~~~~~~~~~~~~~~//
+		if (player1scored || player2scored) {
+			if (player2scored) {
+				//Give player 2 a point
+				score_P2++;
+			}
+			else {
+				//Give player 1 a point
+				score_P1++;
+			}
+			//Reposition ball for next round
+			ball.hitSides();
+		}
+
+		//~~[Handle ball hitting top or bottom of window]~~~~~~~~~~~~~~~~~~~~~~~~//
+		bool hit_top = ball.getPosition().top < 0;
+		bool hit_bottom = ball.getPosition().top > WINDOW_HEIGHT;
+
+		if (hit_top || hit_bottom) {
+			//Flips sign of y component so ball rebounds
+			ball.hitTopOrBottom();
+		}
+
+		//~~[Handle ball hitting a paddle]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+		bool hitPaddleP1 = ball.getPosition().intersects(paddle_P1.getPosition());
+		bool hitPaddleP2 = ball.getPosition().intersects(paddle_P2.getPosition());
+
+		if (hitPaddleP1 || hitPaddleP2) {
+			// Hit detected so reverse the ball X direction
+			ball.hitPaddle();
+		}
+		//~~~~~~~~~~~~~~~~~~~~~~~[UPDATE]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+		ball.update();
+		paddle_P1.update();
+		paddle_P2.update();
+
+		// Update the HUD scores
+		std::stringstream ss; //for concatenation
+		ss << score_P1 << "    " << score_P2;
+		hud.setString(ss.str());
+		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+
+		/*Clear/Draw/Display: Completely refreshes 
+		 *everything at each execution of main
+		 *Mandatory so things from previous frames 
+		 *go away at next frames
+		 */
+		//window.clear(); //defaults to black
+
+		// Clear everything from the last frame
+		window.clear(Color(26, 128, 182, 255)); //pretty blue background
+
+		window.draw(paddle_P1.getShape());
+		window.draw(paddle_P2.getShape());
+		window.draw(ball.getShape());
+
+		// Draw our score
+		window.draw(hud);
 		window.draw(line, 2, sf::Lines); //NET IN MIDDLE
-		window.draw(paddle); //Paddle Test
 
-		//Mandatory double-buffering, takes what was drawn & displays to window from hidden buffer
+		//Mandatory double-buffering, takes what was 
+		//drawn & displays to window from hidden buffer
 		window.display();
-	} //~~~~~~~~~~~~~~~~~~~~~~~~~CODE BODY~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	} //~~~~~~~~~~~~~~~~~~~~~~[END OF CODE BODY]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 	return EXIT_SUCCESS;
 } //End of main
