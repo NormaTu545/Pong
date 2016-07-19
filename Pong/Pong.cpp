@@ -19,22 +19,22 @@
 int main() {
 
 	sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "PONGBALLS");
-	
+
 	//~~[Loading in data]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 	int score_P1 = 0; //Left of net
 	int score_P2 = 0; //Right of net
 
-	//Creat two instances of the paddle
+					  //Creat two instances of the paddle
 	Paddle paddle_P1(PLAYER_1); //Left
 	Paddle paddle_P2(PLAYER_2); //Right
 
-	//Create a ball instance in the middle of the window
+								//Create a ball instance in the middle of the window
 	Ball ball(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
 
 	//Create a "Text" object 
 	Text hud; //aka Heads Up Dispay
 
-	//Font is "karmatic_arcade" from dafont.com
+			  //Font is "karmatic_arcade" from dafont.com
 	Font font;
 	font.loadFromFile("kaFont.ttf");
 
@@ -42,15 +42,15 @@ int main() {
 	hud.setFont(font);
 
 	//Make it kinda big
-	hud.setCharacterSize(50);
+	hud.setCharacterSize(40);
 
 	//Choose a color 
 	hud.setColor(sf::Color::White);
 
 	//Load the Pong "net" at the middle of the window
 	sf::Vertex line[] = {
-		sf::Vertex(sf::Vector2f(WINDOW_WIDTH/2, 0)), 
-		sf::Vertex(sf::Vector2f(WINDOW_WIDTH/2, WINDOW_HEIGHT))
+		sf::Vertex(sf::Vector2f(WINDOW_WIDTH / 2, 0)),
+		sf::Vertex(sf::Vector2f(WINDOW_WIDTH / 2, WINDOW_HEIGHT))
 	};
 
 	//Limit the framerate to 60 frames per second
@@ -64,18 +64,18 @@ int main() {
 				window.close();
 		} //Stops everything if window is closed by user
 
-		//~~[KEY EVENT HANDLING]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+		  //~~[KEY EVENT HANDLING]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
 		if (Keyboard::isKeyPressed(Keyboard::W)) {
 			//move player 1's paddle up
 			paddle_P1.moveUp();
-	    }
+		}
 		else if (Keyboard::isKeyPressed(Keyboard::S)) {
-		    //move player 1's paddle down
+			//move player 1's paddle down
 			paddle_P1.moveDown();
 		}
 		else if (Keyboard::isKeyPressed(Keyboard::D)) {
-		    //fire a pongball from player 1
+			//fire a pongball from player 1
 			//[TO BE IMPLEMENTED]
 		}
 		else if (Keyboard::isKeyPressed(Keyboard::Up)) {
@@ -87,7 +87,7 @@ int main() {
 			paddle_P2.moveDown();
 		}
 		else if (Keyboard::isKeyPressed(Keyboard::Left)) {
-		    //fire a pongball from player 2 
+			//fire a pongball from player 2 
 			//[TO BE IMPLEMENTED]
 		}
 
@@ -140,15 +140,16 @@ int main() {
 
 		// Update the HUD scores
 		std::stringstream ss; //for concatenation
-		ss << score_P1 << "    " << score_P2;
+
+		ss << "                                        " << score_P1 << "    " << score_P2;
 		hud.setString(ss.str());
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
-		/*Clear/Draw/Display: Completely refreshes 
-		 *everything at each execution of main
-		 *Mandatory so things from previous frames 
-		 *go away at next frames
-		 */
+		/*Clear/Draw/Display: Completely refreshes
+		*everything at each execution of main
+		*Mandatory so things from previous frames
+		*go away at next frames
+		*/
 		//window.clear(); //defaults to black
 
 		// Clear everything from the last frame
@@ -162,8 +163,8 @@ int main() {
 		window.draw(hud);
 		window.draw(line, 2, sf::Lines); //NET IN MIDDLE
 
-		//Mandatory double-buffering, takes what was 
-		//drawn & displays to window from hidden buffer
+										 //Mandatory double-buffering, takes what was 
+										 //drawn & displays to window from hidden buffer
 		window.display();
 	} //~~~~~~~~~~~~~~~~~~~~~~[END OF CODE BODY]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 	return EXIT_SUCCESS;
