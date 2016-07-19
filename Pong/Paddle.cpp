@@ -5,7 +5,8 @@
 #define PLAYER_2 2
 #define WINDOW_WIDTH 1000
 #define WINDOW_HEIGHT 500
-
+#define PADDLE_WIDTH 20
+#define PADDLE_HEIGHT 100
 //Constructor, returns POINTER to object Paddle
 Paddle::Paddle(int whichPlayer) {
 	//Paddle position
@@ -17,12 +18,12 @@ Paddle::Paddle(int whichPlayer) {
 	}
 	else { 
 		//Initialize X position to RIGHT side for player 2
-		position.x = WINDOW_WIDTH; 
+		position.x = WINDOW_WIDTH - PADDLE_WIDTH; 
 	}
 	//Initializes Y position halfway down the screen (for both players)
 	position.y = WINDOW_HEIGHT / 2;
 	
-	paddleShape.setSize(sf::Vector2f(20, 100));
+	paddleShape.setSize(sf::Vector2f(PADDLE_WIDTH, PADDLE_HEIGHT));
 	paddleShape.setPosition(position);
 }
 

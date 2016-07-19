@@ -68,11 +68,11 @@ int main() {
 
 		if (Keyboard::isKeyPressed(Keyboard::W)) {
 			//move player 1's paddle up
-			paddle_P1.moveUp;
+			paddle_P1.moveUp();
 	    }
 		else if (Keyboard::isKeyPressed(Keyboard::S)) {
 		    //move player 1's paddle down
-			paddle_P1.moveDown;
+			paddle_P1.moveDown();
 		}
 		else if (Keyboard::isKeyPressed(Keyboard::D)) {
 		    //fire a pongball from player 1
@@ -80,11 +80,11 @@ int main() {
 		}
 		else if (Keyboard::isKeyPressed(Keyboard::Up)) {
 			//move player 2's paddle up
-			paddle_P2.moveUp;
+			paddle_P2.moveUp();
 		}
 		else if (Keyboard::isKeyPressed(Keyboard::Down)) {
 			//move player 2's paddle down
-			paddle_P2.moveDown;
+			paddle_P2.moveDown();
 		}
 		else if (Keyboard::isKeyPressed(Keyboard::Left)) {
 		    //fire a pongball from player 2 
@@ -118,7 +118,7 @@ int main() {
 
 		//~~[Handle ball hitting top or bottom of window]~~~~~~~~~~~~~~~~~~~~~~~~//
 		bool hit_top = ball.getPosition().top < 0;
-		bool hit_bottom = ball.getPosition().top > WINDOW_HEIGHT;
+		bool hit_bottom = ball.getPosition().top > WINDOW_HEIGHT - BALL_SIDE_LENGTH;
 
 		if (hit_top || hit_bottom) {
 			//Flips sign of y component so ball rebounds

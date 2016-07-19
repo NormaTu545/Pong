@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 
 using namespace sf;
-
+#define BALL_SIDE_LENGTH 40
 class Ball {
 
 private:
@@ -11,8 +11,8 @@ private:
 	// A RectangleShape object called ref
 	RectangleShape ballShape;
 
-	float xVelocity = .2f;
-	float yVelocity = .2f;
+	float xVelocity = 3.0f;
+	float yVelocity = 3.0f;
 
 public:
 	Ball(float startX, float startY); //Constructor
@@ -29,7 +29,7 @@ public:
 							//Code for BAT from "bat or top" here
 	void hitPaddle(); //Alters yPosition of ball so it won't get "stuck" to the paddle
 
-					  //old lose condition "hit bottom"- FIX THIS!!!!!!!!!!!!
+					  //THis has been fixed by my dearest love
 	void hitSides(); //Gives point & repositions ball
 
 	void update();

@@ -11,7 +11,7 @@ Ball::Ball(float startX, float startY) {
 	position.y = startY;
 
 	//Ball is a 40x40 square
-	ballShape.setSize(sf::Vector2f(40, 40)); 
+	ballShape.setSize(sf::Vector2f(BALL_SIDE_LENGTH, BALL_SIDE_LENGTH)); 
 	ballShape.setPosition(position);
 }
 
