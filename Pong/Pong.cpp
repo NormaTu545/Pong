@@ -23,6 +23,7 @@ int main() {
 	//~~[Loading in data]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 	int score_P1 = 0; //Left of net
 	int score_P2 = 0; //Right of net
+	bool gameEnded = false;
 
 					  //Creat two instances of the paddle
 	Paddle paddle_P1(PLAYER_1); //Left
@@ -90,8 +91,13 @@ int main() {
 			//fire a pongball from player 2 
 			//[TO BE IMPLEMENTED]
 		}
-
-		//~~[FOR THE LOVE OF GOD TURN THE ABOVE INTO A SWITCH STATEMENT]~~~~~~~//
+		else if (Keyboard::isKeyPressed(Keyboard::Space)) {
+			//[SPACE TO RESTART GAME AFTER SOMEONE WINS]
+			if (gameEnded) { gameEnded = false; }
+			score_P1 = 0; //resets to 0
+			score_P2 = 0; //resets to 0
+			ball.hitSides(); //Recenters ball
+		}
 
 		/*
 		*********************************************************************
@@ -134,15 +140,35 @@ int main() {
 			ball.hitPaddle();
 		}
 		//~~~~~~~~~~~~~~~~~~~~~~~[UPDATE]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
-		ball.update();
-		paddle_P1.update();
-		paddle_P2.update();
-
+		if (!gameEnded) {
+			ball.update();
+			paddle_P1.update();
+			paddle_P2.update();
+		}
 		// Update the HUD scores
 		std::stringstream ss; //for concatenation
-
 		ss << "                                        " << score_P1 << "    " << score_P2;
 		hud.setString(ss.str());
+		
+
+		//Check for win (Someone gets 7 points)
+		if (score_P1 == 7 || score_P2 == 7) {
+			int winnerNumber = 0; //initialize to 0
+
+			if (score_P1 == 7) winnerNumber = PLAYER_1;
+			if (score_P2 == 7) winnerNumber = PLAYER_2;
+
+			std::stringstream winMsg; //To take place of "ss"
+			winMsg << "PLAYER " << winnerNumber << " WINS! (Space) to play again.";
+
+			gameEnded = true;
+
+			//stops the game
+			if (gameEnded) {
+				hud.setString(winMsg.str());
+				ball.stayStill();
+			}
+		}
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
 		/*Clear/Draw/Display: Completely refreshes

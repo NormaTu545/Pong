@@ -57,3 +57,8 @@ void Ball::update() {
 	//Move the ball and the paddle
 	ballShape.setPosition(position);
 }
+
+void Ball::stayStill() {
+	position.y = WINDOW_WIDTH / 2;
+	position.x = WINDOW_HEIGHT / 2;
+}

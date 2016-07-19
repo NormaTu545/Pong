@@ -11,8 +11,8 @@ private:
 	// A RectangleShape object called ref
 	RectangleShape ballShape;
 
-	float xVelocity = 3.0f;
-	float yVelocity = 3.0f;
+	float xVelocity = 4.0f;
+	float yVelocity = 4.0f;
 
 public:
 	Ball(float startX, float startY); //Constructor
@@ -33,4 +33,6 @@ public:
 	void hitSides(); //Gives point & repositions ball
 
 	void update();
+
+	void stayStill(); //for game over reset
 };

@@ -14,7 +14,7 @@ private:
 	// A RectangleShape object
 	RectangleShape paddleShape;
 
-	const float paddleSpeed = 2.0f;
+	const float paddleSpeed = 3.0f;
 
 public:
 	// value of 1, for player 1 on the left side,

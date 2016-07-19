@@ -7,6 +7,7 @@
 #define WINDOW_HEIGHT 500
 #define PADDLE_WIDTH 20
 #define PADDLE_HEIGHT 100
+
 //Constructor, returns POINTER to object Paddle
 Paddle::Paddle(int whichPlayer) {
 	//Paddle position
