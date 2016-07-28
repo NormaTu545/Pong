@@ -6,7 +6,9 @@
 #include "Ball.h"
 #include <sstream>
 #include <cstdlib>
+#include <iostream>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 
 #define WINDOW_WIDTH 1000
 #define WINDOW_HEIGHT 500
@@ -20,12 +22,22 @@ int main() {
 
 	sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "PONGBALLS");
 
+	sf::SoundBuffer buffer;
+
+	if (!buffer.loadFromFile("paddleBump.wav")) {
+		std::cout << "Error: Couldn't find sound file." << std::endl;
+	}
+
+	sf::Sound paddle_bump;
+	paddle_bump.setBuffer(buffer);
+
+
 	//~~[Loading in data]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 	int score_P1 = 0; //Left of net
 	int score_P2 = 0; //Right of net
 	bool gameEnded = false;
 
-					  //Creat two instances of the paddle
+					            //Creat two instances of the paddle
 	Paddle paddle_P1(PLAYER_1); //Left
 	Paddle paddle_P2(PLAYER_2); //Right
 
@@ -138,6 +150,7 @@ int main() {
 		if (hitPaddleP1 || hitPaddleP2) {
 			// Hit detected so reverse the ball X direction
 			ball.hitPaddle();
+			paddle_bump.play();
 		}
 		//~~~~~~~~~~~~~~~~~~~~~~~[UPDATE]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 		if (!gameEnded) {
