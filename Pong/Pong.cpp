@@ -22,17 +22,25 @@ int main() {
 
 	sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "PONGBALLS");
 
-	sf::SoundBuffer buffer;
+	//~~[Loading in sound data]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
-	if (!buffer.loadFromFile("paddleBump.wav")) {
-		std::cout << "Error: Couldn't find sound file." << std::endl;
+	sf::SoundBuffer paddle_buffer;
+	sf::SoundBuffer wall_buffer;
+
+	if (!paddle_buffer.loadFromFile("paddleBump.wav")) {
+		return EXIT_FAILURE;  
+	}
+	if (!wall_buffer.loadFromFile("wallBump.wav")) {
+		return EXIT_FAILURE;
 	}
 
 	sf::Sound paddle_bump;
-	paddle_bump.setBuffer(buffer);
+	paddle_bump.setBuffer(paddle_buffer);
 
+	sf::Sound wall_bump;
+	wall_bump.setBuffer(wall_buffer);
 
-	//~~[Loading in data]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+	//~~[Loading in game data]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 	int score_P1 = 0; //Left of net
 	int score_P2 = 0; //Right of net
 	bool gameEnded = false;
@@ -141,6 +149,7 @@ int main() {
 		if (hit_top || hit_bottom) {
 			//Flips sign of y component so ball rebounds
 			ball.hitTopOrBottom();
+			wall_bump.play();
 		}
 
 		//~~[Handle ball hitting a paddle]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
