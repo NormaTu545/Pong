@@ -91,27 +91,27 @@ int main() {
 			//move player 1's paddle up
 			paddle_P1.moveUp();
 		}
-		else if (Keyboard::isKeyPressed(Keyboard::S)) {
+		if (Keyboard::isKeyPressed(Keyboard::S)) {
 			//move player 1's paddle down
 			paddle_P1.moveDown();
 		}
-		else if (Keyboard::isKeyPressed(Keyboard::D)) {
+		if (Keyboard::isKeyPressed(Keyboard::D)) {
 			//fire a pongball from player 1
 			//[TO BE IMPLEMENTED]
 		}
-		else if (Keyboard::isKeyPressed(Keyboard::Up)) {
+		if (Keyboard::isKeyPressed(Keyboard::Up)) {
 			//move player 2's paddle up
 			paddle_P2.moveUp();
 		}
-		else if (Keyboard::isKeyPressed(Keyboard::Down)) {
+		if (Keyboard::isKeyPressed(Keyboard::Down)) {
 			//move player 2's paddle down
 			paddle_P2.moveDown();
 		}
-		else if (Keyboard::isKeyPressed(Keyboard::Left)) {
+		if (Keyboard::isKeyPressed(Keyboard::Left)) {
 			//fire a pongball from player 2 
 			//[TO BE IMPLEMENTED]
 		}
-		else if (Keyboard::isKeyPressed(Keyboard::Space)) {
+		if (Keyboard::isKeyPressed(Keyboard::Space)) {
 			//[SPACE TO RESTART GAME AFTER SOMEONE WINS]
 			if (gameEnded) { gameEnded = false; }
 			score_P1 = 0; //resets to 0
@@ -210,7 +210,6 @@ int main() {
 		// Draw our score
 		window.draw(hud);
 		window.draw(line, 2, sf::Lines); //NET IN MIDDLE
-
 										 //Mandatory double-buffering, takes what was 
 										 //drawn & displays to window from hidden buffer
 		window.display();
